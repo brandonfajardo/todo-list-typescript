@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useActions } from '../../hooks/useAction'
 import { RootState } from '../../state'
 import SkeletonLoader from '../SkeletonLoader'
 import Todo from '../Todo'
+import { ErrorMessage } from './styles'
 
 const Todos: React.FC = () => {
     const { getTodos } = useActions()
     const { data: todos, error, loading } = useSelector((state: RootState) => state.todos)
+    const [editId, setEditId] = useState('')
 
     useEffect(() => {
         getTodos()
@@ -15,12 +17,22 @@ const Todos: React.FC = () => {
 
     return (
         <>
-            {error && <p>{error}</p>}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             {loading.fetching
-                ? <SkeletonLoader />
+                ? <SkeletonLoader rows={5} />
                 : (
-                    <div style={{ marginTop: '20px' }}>
-                        {todos.map((todoItem: any) => <Todo {...todoItem} />)}
+                    <div>
+                        {loading.adding && <SkeletonLoader rows={1} />}
+                        {todos.map((todoItem: any) => {
+                            return (
+                                <Todo
+                                    key={todoItem.id}
+                                    editting={editId === todoItem.id}
+                                    setEditId={setEditId}
+                                    {...todoItem}
+                                />
+                            )
+                        })}
                     </div>
                   )
             }

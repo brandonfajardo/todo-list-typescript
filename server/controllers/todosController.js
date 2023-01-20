@@ -1,44 +1,41 @@
-const {
-    GET_TODOS,
-    ADD_TODO,
-    UPDATE_TODO,
-    DELETE_TODOS
-} = require('../fake')
+const fakeClient = require('../fake')
 
 const getTodos = async (req, res) => {
     try {
-        const todos = await GET_TODOS()
-        // Add validation
-        res.json(todos)
+        const todos = await fakeClient.GET_TODOS()
+        return res.json(todos)
     } catch (error) {
-        throw error
+        return res.status(500).json(error.message)
     }
 }
 
 const addTodo = async (req, res) => {
     try {
-        const todos = await ADD_TODO()
-        res.json(todos)
+        const { text } = req.body
+        const todos = await fakeClient.ADD_TODO(text)
+        return res.json(todos)
     } catch (error) {
-        throw error
+        return res.status(500).json(error.message)
     }
 }
 
 const updateTodo = async (req, res) => {
     try {
-        const todos = await UPDATE_TODO()
-        res.json(todos)
+        const { todo } = req.body
+        const todos = await fakeClient.UPDATE_TODO(todo)
+        return res.json(todos)
     } catch (error) {
-        throw error
+        return res.status(500).json(error.message)
     }
 }
 
 const deleteTodos = async (req, res) => {
     try {
-        const todos = await DELETE_TODOS()
-        res.json(todos)
+        const { id } = req.body
+        const todoId = await fakeClient.DELETE_TODOS(id)
+        return res.json(todoId)
     } catch (error) {
-        throw error
+        return res.status(500).json(error.message)
     }
 }
 

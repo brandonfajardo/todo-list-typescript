@@ -1,38 +1,49 @@
+const { v4: uuidv4 } = require('uuid');
+
 // Too much work setting up a mongo DB local server!
-const TODOS = [{ completed: false, text: 'Workout'}]
+// Mutate this array
+let TODOS = []
 
 // Resemble fake API calls
 const GET_TODOS = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(TODOS)
-        }, 2000)
+        }, 1300)
     })
 }
 
-const ADD_TODO = (todo) => {
+const ADD_TODO = (text) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve([todo, ...TODOS])
-        }, 2000)
+            const id = uuidv4()
+            const todo = { id, text, completed: false }
+
+            TODOS.unshift(todo)
+            resolve(TODOS)
+        }, 1300)
     })
 }
 
 const UPDATE_TODO = (todo) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const updatedTodos = TODOS
-            resolve(updatedTodos)
-        }, 2000)
+        const updatedTodos = TODOS.map((todoItem) => {
+            return todoItem.id === todo.id
+                ? { ...todo}
+                : todoItem
+        })
+
+        TODOS = updatedTodos
+        resolve(todo)
     })
 }
 
-const DELETE_TODOS = (todoIds) => {
+const DELETE_TODOS = (id) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const updatedTodos = TODOS
-            resolve(updatedTodos)
-        }, 2000)
+        const updatedTodos = TODOS.filter((todo) => todo.id !== id)
+
+        TODOS = updatedTodos
+        resolve(id)
     })
 }
 

@@ -17,6 +17,6 @@ export const Skeleton = styled.div`
     width: 100%;
     height: 70px;
     border-radius: 3px;
-    margin-top: 20px;
-    animation: ${shine} 1.5s infinite;
+    margin-bottom: 10px;
+    animation: ${shine} 1s infinite;
 `

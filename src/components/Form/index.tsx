@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Input } from './styles'
 import useAutoFocus from '../../hooks/useAutoFocus'
+import { useActions } from '../../hooks/useAction'
 
 const Form: React.FC = () => {
     const [text, setText] = useState('')
+    const [error, setError] = useState('')
     const inputRef = useAutoFocus();
+    const { addTodo } = useActions()
 
     const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
@@ -13,7 +16,10 @@ const Form: React.FC = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        setText('')
+        if (text.length) {
+            addTodo(text)
+            setText('') 
+        }
     }
 
     return (

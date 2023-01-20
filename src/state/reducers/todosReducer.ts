@@ -9,7 +9,7 @@ type TodosState = {
         deleting: boolean;
     };
     error: string | null;
-    data: { completed: boolean; text: string; }[];
+    data: { completed: boolean; text: string; id: string; }[];
 }
 
 const initialState = {
@@ -29,6 +29,39 @@ const reducer = (
     action: Action
 ): TodosState => {
     switch(action.type) {
+        case ActionType.UPDATE_TODO:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    updating: true
+                }
+            }
+        case ActionType.UPDATE_TODO_SUCCESS:
+            const updatedTodo = action.payload
+            const updatedTodos = state.data.map((todoItem) => {
+                return updatedTodo.id === todoItem.id
+                    ? { ...updatedTodo }
+                    : todoItem
+            })
+
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    updating: false
+                },
+                data: updatedTodos
+            }
+        case ActionType.UPDATE_TODO_ERROR:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    updating: false
+                },
+                error: action.payload
+            }
         case ActionType.ADD_TODO:
             return {
                 ...state,
@@ -36,6 +69,19 @@ const reducer = (
                     ...state.loading,
                     adding: true
                 }
+            }
+        case ActionType.ADD_TODO_SUCCESS:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    adding: false
+                },
+                data: action.payload
+            }
+        case ActionType.ADD_TODO_ERROR:
+            return {
+                ...state
             }
         case ActionType.GET_TODOS:
             return {
@@ -54,25 +100,35 @@ const reducer = (
                     fetching: false
                 }
             }
-        // case ActionType.GET_TODOS_ERROR:
-        // case 'add_todo':
-        //     return {
-        //         loading: true,
-        //         error: null,
-        //         data: action.payload
-        //     }
-        // case 'add_todo_success':
-        //     return {
-        //         loading: false,
-        //         error: null,
-        //         data: action.payload
-        //     }
-        // case 'add_todo_error':
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         error: action.payload,
-        //     }
+        case ActionType.GET_TODOS_ERROR:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    fetching: false
+                },
+                error: action.payload
+            }
+        case ActionType.DELETE_TODO:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    deleting: true
+                }
+            }
+        case ActionType.DELETE_TODO_SUCCESS:
+            const deletedTodoId = action.payload
+            const todos = state.data.filter(todo => todo.id !== deletedTodoId)
+            return {
+                ...state,
+                data: todos
+            }
+        case ActionType.DELETE_TODO_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return state
     }

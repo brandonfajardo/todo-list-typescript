@@ -11,11 +11,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <TodoApp />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <TodoApp />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

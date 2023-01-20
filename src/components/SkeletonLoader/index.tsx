@@ -1,13 +1,12 @@
 import { Skeleton } from './styles'
 
-const SkeletonLoader: React.FC = () => {
+const SkeletonLoader = (props: any) => {
+    const { rows } = props
+    const iterate = Array(rows).fill(true)
+
     return (
         <>
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            {iterate.map((item, index) => <Skeleton key={`row-${index}`}/>)}
         </>
     )
 }
