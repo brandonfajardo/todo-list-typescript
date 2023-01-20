@@ -7,7 +7,6 @@ import fetchClient from '../../utils/fetchClient'
 export const getTodos = () => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch({ type: ActionType.GET_TODOS })
-        console.log('DISPATCH')
 
         try {
             const result = await fetchClient(`${constants.SERVER_URL}/todos`, { method: 'GET' })
@@ -24,7 +23,7 @@ export const addTodo = (text: string) => {
         dispatch({ type: ActionType.ADD_TODO })
 
         try {
-            const res = await fetch(`${constants.SERVER_URL}/todos`, {
+            const result = await fetchClient(`${constants.SERVER_URL}/todos`, {
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -33,8 +32,8 @@ export const addTodo = (text: string) => {
                     text
                 })
             })
-            const todos = await res.json()
-            dispatch({ type: ActionType.ADD_TODO_SUCCESS, payload: todos })
+ 
+            dispatch({ type: ActionType.ADD_TODO_SUCCESS, payload: result })
         } catch (e: any) {
             dispatch({ type: ActionType.ADD_TODO_ERROR, payload: e.message })
         }
@@ -45,7 +44,7 @@ export const updateTodo = (todo: any) => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch({ type: ActionType.UPDATE_TODO })
         try {
-            const res = await fetch(`${constants.SERVER_URL}/todos`, {
+            const result = await fetchClient(`${constants.SERVER_URL}/todos`, {
                 headers: {
                     'Content-Type': 'application/json'
                   },
@@ -53,8 +52,7 @@ export const updateTodo = (todo: any) => {
                   body: JSON.stringify({ todo })
             })
 
-            const updatedTodo = await res.json()
-            dispatch({ type: ActionType.UPDATE_TODO_SUCCESS, payload: updatedTodo })
+            dispatch({ type: ActionType.UPDATE_TODO_SUCCESS, payload: result })
 
         } catch (e: any) {
             dispatch({ type: ActionType.UPDATE_TODO_ERROR, payload: e.message })
@@ -66,7 +64,7 @@ export const deleteTodo = (id: string) => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch({ type: ActionType.DELETE_TODO })
         try {
-            const res = await fetch(`${constants.SERVER_URL}/todos`, {
+            const result = await fetchClient(`${constants.SERVER_URL}/todos`, {
                 headers: {
                     'Content-Type': 'application/json'
                   },
@@ -74,9 +72,7 @@ export const deleteTodo = (id: string) => {
                   body: JSON.stringify({ id })
             })
 
-            const deletedTodoId = await res.json()
-
-            dispatch({ type: ActionType.DELETE_TODO_SUCCESS, payload: deletedTodoId })
+            dispatch({ type: ActionType.DELETE_TODO_SUCCESS, payload: result })
 
         } catch (e: any) {
             dispatch({ type: ActionType.DELETE_TODO_ERROR, payload: e.message })

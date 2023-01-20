@@ -5,7 +5,6 @@ import { useActions } from '../../hooks/useAction'
 
 const Form: React.FC = () => {
     const [text, setText] = useState('')
-    const [error, setError] = useState('')
     const inputRef = useAutoFocus();
     const { addTodo } = useActions()
 

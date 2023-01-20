@@ -20,7 +20,7 @@ const ADD_TODO = (text) => {
             const todo = { id, text, completed: false }
 
             TODOS.unshift(todo)
-            resolve(TODOS)
+            resolve(todo)
         }, 1300)
     })
 }
@@ -38,7 +38,7 @@ const UPDATE_TODO = (todo) => {
     })
 }
 
-const DELETE_TODOS = (id) => {
+const DELETE_TODO = (id) => {
     return new Promise((resolve, reject) => {
         const updatedTodos = TODOS.filter((todo) => todo.id !== id)
 
@@ -51,5 +51,5 @@ module.exports = {
     GET_TODOS,
     ADD_TODO,
     UPDATE_TODO,
-    DELETE_TODOS
+    DELETE_TODO
 }

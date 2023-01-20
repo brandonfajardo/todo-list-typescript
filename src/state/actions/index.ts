@@ -40,7 +40,7 @@ type AddTodoAction = {
 
 type AddTodoSuccessAction = {
     type: ActionType.ADD_TODO_SUCCESS,
-    payload: Todo[]
+    payload: Todo
 }
 
 type AddTodoErrorAction = {

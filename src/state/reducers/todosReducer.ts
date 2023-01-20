@@ -71,17 +71,23 @@ const reducer = (
                 }
             }
         case ActionType.ADD_TODO_SUCCESS:
+            const todo = action.payload
             return {
                 ...state,
                 loading: {
                     ...state.loading,
                     adding: false
                 },
-                data: action.payload
+                data: [todo, ...state.data]
             }
         case ActionType.ADD_TODO_ERROR:
             return {
-                ...state
+                ...state,
+                loading: {
+                    ...state.loading,
+                    adding: false
+                },
+                error: action.payload
             }
         case ActionType.GET_TODOS:
             return {
@@ -122,11 +128,19 @@ const reducer = (
             const todos = state.data.filter(todo => todo.id !== deletedTodoId)
             return {
                 ...state,
+                loading: {
+                    ...state.loading,
+                    deleting: true
+                },
                 data: todos
             }
         case ActionType.DELETE_TODO_ERROR:
             return {
                 ...state,
+                loading: {
+                    ...state.loading,
+                    deleting: false
+                },
                 error: action.payload
             }
         default:

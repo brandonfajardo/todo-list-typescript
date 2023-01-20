@@ -1,7 +1,8 @@
 import styled from 'styled-components'
+import { medium } from '../../styles/fonts'
 
 export const Input = styled.input`
-    font-size: 20px;
+    font-size: ${medium};
     width: 100%;
     padding: 10px 20px;
     padding: 20px 30px;

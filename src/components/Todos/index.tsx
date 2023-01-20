@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useActions } from '../../hooks/useAction'
 import { RootState } from '../../state'
 import SkeletonLoader from '../SkeletonLoader'
-import Todo from '../Todo'
+import Todo, { TodoItem } from '../Todo'
 import { ErrorMessage } from './styles'
 
 const Todos: React.FC = () => {
@@ -23,13 +23,13 @@ const Todos: React.FC = () => {
                 : (
                     <div>
                         {loading.adding && <SkeletonLoader rows={1} />}
-                        {todos.map((todoItem: any) => {
+                        {todos.map((todoItem: TodoItem) => {
                             return (
                                 <Todo
+                                    {...todoItem}
                                     key={todoItem.id}
                                     editting={editId === todoItem.id}
                                     setEditId={setEditId}
-                                    {...todoItem}
                                 />
                             )
                         })}

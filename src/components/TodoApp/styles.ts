@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { black } from '../../styles/colours'
 import { Flex } from '../../styles/layout'
+import { mdBreakpoint } from '../../styles/responsive'
 
 export const Heading = styled.h1`
     align-self: center;
@@ -13,5 +14,9 @@ export const Wrapper = styled(Flex)`
 `
 
 export const ContentWrapper = styled(Flex)`
-    width: 500px;
+    width: 550px;
+
+    @media (max-width: ${mdBreakpoint}) {
+        width: 90%;
+    }
 `
