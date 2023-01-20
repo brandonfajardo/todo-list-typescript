@@ -23,8 +23,8 @@ const addTodo = async (req, res) => {
 const updateTodo = async (req, res) => {
     try {
         const { todo } = req.body
-        const todos = await fakeClient.UPDATE_TODO(todo)
-        return res.json(todos)
+        const updatedTodo = await fakeClient.UPDATE_TODO(todo)
+        return res.json(updatedTodo)
     } catch (error) {
         return res.status(500).json(error.message)
     }

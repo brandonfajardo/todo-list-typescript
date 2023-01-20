@@ -3,6 +3,7 @@ import { Action } from '../actions'
 import { Dispatch } from 'redux'
 import constants from '../../constants'
 import fetchClient from '../../utils/fetchClient'
+import { TodoItem } from '../../components/Todo'
 
 export const getTodos = () => {
     return async (dispatch: Dispatch<Action>) => {
@@ -40,7 +41,7 @@ export const addTodo = (text: string) => {
     }
 }
 
-export const updateTodo = (todo: any) => {
+export const updateTodo = (todo: TodoItem) => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch({ type: ActionType.UPDATE_TODO })
         try {

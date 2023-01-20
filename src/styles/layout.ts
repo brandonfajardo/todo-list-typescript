@@ -10,7 +10,7 @@ type FlexProps = {
 
 export const Flex = styled.div<FlexProps>`
     display: flex;
-    flex-direction: ${(props: any) => {
+    flex-direction: ${(props) => {
         if (props.column) {
             return 'column'
         }
@@ -19,7 +19,7 @@ export const Flex = styled.div<FlexProps>`
             return 'row'
         }
     }};
-    justify-content: ${(props: any) => {
+    justify-content: ${(props) => {
         if (props.center) {
            return 'center' 
         }
